@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password:<sup>*</sup></label>
-                    <input type="password" name="confirmPassword" id="confirmPassword" class="<?php echo (!empty($data['passwordErr'])) ? 'is-invalid' : ''; ?> form-control form-control-lg" value="<?php echo $data['confirmPassword'] ?>">
+                    <input type="password" name="confirmPassword" id="confirmPassword" class="<?php echo (!empty($data['confirmPasswordErr'])) ? 'is-invalid' : ''; ?> form-control form-control-lg" value="<?php echo $data['confirmPassword'] ?>">
                     <span class='invalid-feedback'><?php echo $data['confirmPasswordErr'] ?></span>
                 </div>
 
