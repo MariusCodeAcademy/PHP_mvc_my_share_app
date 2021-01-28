@@ -1,9 +1,10 @@
-<?php
-require APPROOT . '/views/inc/header.php';
+<?php require APPROOT . '/views/inc/header.php'; ?>
 
 
-echo "<h1>{$data['title']}</h1>";
+<h1 class="display-3"><?php echo $data['title'] ?></h1>
+<p class="lead"><?php echo $data['description'] ?></p>
+<p>Version: <?php echo APPVERSION ?></p>
 
 
 
-require APPROOT . '/views/inc/footer.php';
+<?php require APPROOT . '/views/inc/footer.php';

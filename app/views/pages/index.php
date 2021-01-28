@@ -1,10 +1,14 @@
 <?php
-require APPROOT . '/views/inc/header.php';
+require APPROOT . '/views/inc/header.php'; ?>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3"><?php echo $data['title'] ?></h1>
+        <p class="lead"><?php echo $data['description'] ?></p>
+    </div>
+</div>
 
 
-echo "<h1>{$data['title']}</h1>";
-echo "<p>This is simple MVC core framework. See documentation to know how to use it</p>";
 
 
-
-require APPROOT . '/views/inc/footer.php';
+<?php require APPROOT . '/views/inc/footer.php';
