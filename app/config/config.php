@@ -14,6 +14,9 @@ define('URLROOT', 'http://localhost:8888/my_share');
 // Site name 
 define('SITENAME', 'MyShare');
 
+// app version
+define("APPVERSION", "1.0.0");
+
 
 
 // Table users 
