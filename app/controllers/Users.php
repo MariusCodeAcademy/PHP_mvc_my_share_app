@@ -166,6 +166,7 @@ class Users extends Controller
                 if ($loggedInUser) {
                     // create session 
                     // password match
+                    die('email and passs match start session immediately');
                 } else {
                     $data['passwordErr'] = 'Wrong password or email';
                     // load view with errors
