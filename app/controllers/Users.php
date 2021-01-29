@@ -143,6 +143,13 @@ class Users extends Controller
             // Validate email
             if (empty($data['email'])) {
                 $data['emailErr'] = 'Please enter your email';
+            } else {
+                // check if we have this email in our user table DB
+                if ($this->userModel->findUserByEmail($data['email'])) {
+                    // user found
+                } else {
+                    $data['emailErr'] = 'User does not exist';
+                }
             }
 
             // Validate password
@@ -153,7 +160,19 @@ class Users extends Controller
             // check if we have errors
             if (empty($data['emailErr']) && empty($data['passwordErr'])) {
                 // no errors 
-                die('SUCCESS');
+                // email was found and password was entered
+                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
+
+                if ($loggedInUser) {
+                    // create session 
+                    // password match
+                } else {
+                    $data['passwordErr'] = 'Wrong password or email';
+                    // load view with errors
+                    $this->view('users/login', $data);
+                }
+
+                // die('SUCCESS');
             } else {
                 // load view with errors
                 $this->view('users/login', $data);
