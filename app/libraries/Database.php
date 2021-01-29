@@ -99,7 +99,7 @@ class Database
     public function singleRow()
     {
         $this->execute();
-        // PDO::FETCH_OBJ $result[1]->id
+        // PDO::FETCH_OBJ $result->id
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
 
