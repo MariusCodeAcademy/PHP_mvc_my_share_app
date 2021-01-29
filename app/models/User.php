@@ -32,4 +32,24 @@ class User
             return false;
         }
     }
+    // Register user with given sanitized data 
+    // @return Boolean 
+    public function register($data)
+    {
+        // prepare statment
+        $this->db->query("INSERT INTO users (`name`, `email`, `password`) VALUES (:name, :email, :password)");
+
+        // add values
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':email', $data['email']);
+        // hasshed
+        $this->db->bind(':password', $data['password']);
+
+        // make query 
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
