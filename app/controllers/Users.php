@@ -166,7 +166,8 @@ class Users extends Controller
                 if ($loggedInUser) {
                     // create session 
                     // password match
-                    die('email and passs match start session immediately');
+                    // die('email and passs match start session immediately');
+                    $this->createUserSession($loggedInUser);
                 } else {
                     $data['passwordErr'] = 'Wrong password or email';
                     // load view with errors
@@ -195,5 +196,14 @@ class Users extends Controller
             // load view
             $this->view('users/login', $data);
         }
+    }
+
+    // if we have user we save its data in session
+    public function createUserSession($userRow)
+    {
+        $_SESSION['user_id'] = $userRow->id;
+        $_SESSION['user_email'] = $userRow->email;
+        $_SESSION['user_name'] = $userRow->name;
+        redirect('/pages/index');
     }
 }
