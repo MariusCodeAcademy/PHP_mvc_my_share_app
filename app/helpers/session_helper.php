@@ -29,3 +29,19 @@ function flash($name = '', $message = '', $class = 'alert alert-success')
         }
     }
 }
+
+// check if user is logged in 
+// @returns boolean
+function isLoggedIn()
+{
+    // older simpler way 
+    // if (isset($_SESSION['user_id'])) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+
+    // more complex
+    if (isset($_SESSION['user_id'])) return true;
+    return false;
+}
