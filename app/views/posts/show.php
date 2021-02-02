@@ -14,7 +14,7 @@
     <hr>
     <a href="<?php echo URLROOT . '/posts/edit/' . $data['post']->id ?>" class='btn btn-info '> <i class="fa fa-pencil"></i> Edit</a>
 
-    <form action="<?php echo URLROOT ?>/posts/delete" method="post" class='pull-right'>
+    <form action="<?php echo URLROOT . '/posts/delete/' . $data['post']->id ?>" method="post" class='pull-right'>
         <button type="submit" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
     </form>
 <?php endif; ?>
