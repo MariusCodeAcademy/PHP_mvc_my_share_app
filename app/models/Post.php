@@ -84,4 +84,20 @@ class Post
             return false;
         }
     }
+
+    public function deletePost($id)
+    {
+        // prepare statment
+        $this->db->query("DELETE FROM posts WHERE id = :post_id");
+
+        // add values
+        $this->db->bind(':post_id', $id);
+
+        // make query 
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
