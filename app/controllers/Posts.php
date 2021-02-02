@@ -173,4 +173,18 @@ class Posts extends Controller
             $this->view('posts/edit', $data);
         }
     }
+
+    public function delete($id = null)
+    {
+        $vld = new Validation;
+        if ($vld->ifRequestIsPost() && $id) {
+            // die('will be deleting soon');
+            if ($this->postModel->deletePost($id)) {
+                flash('post_message', 'Post was removed', 'alert alert-warning');
+                redirect('/posts');
+            }
+        } else {
+            redirect('/posts');
+        }
+    }
 }
