@@ -9,6 +9,7 @@
 class Posts extends Controller
 {
     private $postModel;
+    private $userModel;
 
     public function __construct()
     {
@@ -16,6 +17,7 @@ class Posts extends Controller
         if (!isLoggedIn()) redirect('/users/login');
 
         $this->postModel = $this->model('Post');
+        $this->userModel = $this->model('User');
     }
 
     public function index()
@@ -90,10 +92,12 @@ class Posts extends Controller
 
         // get post row 
         $post = $this->postModel->getPostById($id);
-
+        // lets get user data by user_id
+        $user = $this->userModel->getUserById($post->user_id);
         // create data for the view and add post data
         $data = [
             'post' => $post,
+            'user' => $user,
         ];
         // load view with data
         $this->view('posts/show', $data);
