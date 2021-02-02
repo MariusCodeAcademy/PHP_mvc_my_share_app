@@ -3,6 +3,7 @@
 <div class="row">
     <div class="col">
         <h1>Posts</h1>
+        <?php echo flash('post_message'); ?>
     </div>
     <div class="col">
         <a href="<?php echo URLROOT; ?>/posts/add" class="btn btn-primary pull-right mt-2">
