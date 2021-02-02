@@ -102,4 +102,75 @@ class Posts extends Controller
         // load view with data
         $this->view('posts/show', $data);
     }
+
+    public function edit($id = null)
+    {
+        // if post has no parameter we redirect
+        if ($id === null) redirect('/posts');
+
+        // if form was submited
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            // lets validate
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'user_id' => $_SESSION['user_id'],
+                'title' => trim($_POST['title']),
+                'body' => trim($_POST['body']),
+                'titleErr' => '',
+                'bodyErr' => '',
+            ];
+
+            // validate title
+            if (empty($data['title'])) {
+                $data['titleErr'] = 'Please enter a title';
+            }
+
+            // validate title
+            if (empty($data['body'])) {
+                $data['bodyErr'] = 'Please enter a text';
+            }
+
+            // check of there are no errors
+            if (empty($data['titleErr']) && empty($data['bodyErr'])) {
+                // there are no errors
+                // die('no errors, can submit');
+
+                if ($this->postModel->updatePost($data)) {
+                    // post added
+                    flash('post_message', 'You have edited the post');
+                    redirect('/posts');
+                } else {
+                    die('something went wrong in adding a post');
+                }
+            } else {
+                // load view with errors
+                $this->view('posts/edit', $data);
+            }
+        } else {
+            // else (user entered onto this page)
+
+            $post = $this->postModel->getPostById($id);
+
+            if ($post) {
+                // check if this post belong to this user
+                if ($post->user_id !== $_SESSION['user_id']) redirect('/posts');
+            } else {
+                die('something went wrong. getPostById');
+            }
+
+
+            // post found and will load view
+            $data = [
+                'id' => $id,
+                'title' => $post->title,
+                'body' => $post->body,
+                'titleErr' => '',
+                'bodyErr' => '',
+            ];
+
+            $this->view('posts/edit', $data);
+        }
+    }
 }
