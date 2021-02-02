@@ -65,4 +65,23 @@ class Post
         }
         return false;
     }
+
+    // to update one field
+    public function updatePost($data)
+    {
+        // prepare statment
+        $this->db->query("UPDATE posts SET title = :title, body = :body WHERE id = :post_id");
+
+        // add values
+        $this->db->bind(':title', $data['title']);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':post_id', $data['post_id']);
+
+        // make query 
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
