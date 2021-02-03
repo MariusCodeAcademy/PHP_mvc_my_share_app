@@ -26,4 +26,16 @@ class Validation
         }
         return false;
     }
+    // check if every array value is empty
+    // @return boolean
+    public function ifEmptyArr($arr)
+    {
+        // check if all values of array is empty
+        foreach ($arr as $errorValue) {
+            if (!empty($errorValue)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -79,7 +79,7 @@ class Users extends Controller
 
 
             // if there is no erros
-            if (empty($data['errors']['nameErr']) && empty($data['errors']['emailErr']) && empty($data['errors']['passwordErr']) && empty($data['errors']['confirmPasswordErr'])) {
+            if ($this->vld->ifEmptyArr($data['errors'])) {
                 // there are no errors; 
                 // die('SUCCESS');
 
