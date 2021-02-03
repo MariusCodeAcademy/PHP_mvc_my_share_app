@@ -25,7 +25,8 @@ class Posts extends Controller
         // get posts 
         $posts = $this->postModel->getPosts();
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
+            'currentPage' => 'home',
         ];
         $this->view('posts/index', $data);
     }

@@ -15,7 +15,8 @@ class Pages extends Controller
         // create some data to load into vie
         $data = [
             'title' => 'Welcome to ' . SITENAME,
-            'description' => 'This is an app to share your Thoughts with the World'
+            'description' => 'This is an app to share your Thoughts with the World',
+            'currentPage' => 'home',
         ];
 
         // load the view
@@ -28,7 +29,8 @@ class Pages extends Controller
         // create some data to load into vie
         $data = [
             'title' => 'About - ' . SITENAME,
-            'description' => 'App to share news with friends and World'
+            'description' => 'App to share news with friends and World',
+            'currentPage' => 'about',
         ];
 
         // load the view

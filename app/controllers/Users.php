@@ -100,6 +100,7 @@ class Users extends Controller
             } else {
                 // set flash msg
                 flash('register_fail', 'please check the form', 'alert alert-danger');
+                $data['currentPage'] = 'register';
                 // load view with errors 
                 $this->view('users/register', $data);
             }
@@ -117,6 +118,7 @@ class Users extends Controller
                 'emailErr'     => '',
                 'passwordErr'  => '',
                 'confirmPasswordErr' => '',
+                'currentPage' => 'register',
             ];
 
             // load view
@@ -176,6 +178,7 @@ class Users extends Controller
 
                 // die('SUCCESS');
             } else {
+                $data['currentPage'] = 'login';
                 // load view with errors
                 $this->view('users/login', $data);
             }
@@ -192,7 +195,7 @@ class Users extends Controller
                 'emailErr'     => '',
                 'passwordErr'  => '',
             ];
-
+            $data['currentPage'] = 'login';
             // load view
             $this->view('users/login', $data);
         }
