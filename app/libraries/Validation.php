@@ -50,16 +50,51 @@ class Validation
     }
 
     // if field is empty we return message, else we return empty string
-    public function ifEmptyField($field, $fieldDisplayName, $msg = null)
+    public function ifEmptyField($field, $fieldDisplayName)
     {
         // Validate Name 
         if (empty($field)) {
             // empty field
-            if ($msg) {
-                return $msg;
-            }
+
             return "Please enter Your $fieldDisplayName";
         }
         return ''; //falsy
+    }
+
+    public function validateEmail($field, &$userModel)
+    {
+        // validate empty 
+        if (empty($field)) return "Please enter Your Email";
+
+        // check email format
+        if (filter_var($field, FILTER_VALIDATE_EMAIL) === false) return "Please check your email";
+
+        // if email already exists
+        if ($userModel->findUserByEmail($field)) return 'Email already taken';
+
+        return '';
+    }
+
+    public function validatePassword($passField, $min, $max)
+    {
+        // validate empty 
+        if (empty($passField)) return "Please enter a password";
+
+        // if pass length is les then min
+        if (strlen($passField) < $min) return "Password must be more than $min characters length";
+
+        // if pass length is more then max
+        if (strlen($passField) > $max) return "Password must be less than $max characters length";
+
+        // check password strength
+        if (!preg_match("#[0-9]+#", $passField)) return "Password must contain at least one number";
+
+        if (!preg_match("#[a-z]+#", $passField)) return "Password must include at least one letter!";
+
+        if (!preg_match("#[A-Z]+#", $passField)) return "Password must include at least one Capital letter!";
+
+        // if (!preg_match("#\W+#", $passField)) return "Password must include at least one symbol!";
+
+        return '';
     }
 }
