@@ -42,49 +42,13 @@ class Users extends Controller
 
             ];
 
-
-            // not modifying
-            $data['errors']['nameErr'] = $this->vld->ifEmptyField($data['name'], 'Name');
-
+            $data['errors']['nameErr'] = $this->vld->validateName($data['name']);
 
             $data['errors']['emailErr'] = $this->vld->validateEmail($data['email'], $this->userModel);
 
-
-
-
-
-
-
-
-
-
             $data['errors']['passwordErr'] = $this->vld->validatePassword($data['password'], 6, 10);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // make it so it will return custom msg
-            $data['errors']['confirmPasswordErr'] = $this->vld->ifEmptyField($data['confirmPassword'], 'Password', 'Please repeat password');
-
-            // Validate confirmPassword 
-            if ($data['errors']['confirmPasswordErr'] === '') {
-                // // empty field
-                // $data['errors']['confirmPasswordErr'] = "Please repeat password";
-                if ($data['confirmPassword'] !== $data['password']) {
-                    $data['errors']['confirmPasswordErr'] = "Password must match";
-                }
-            }
+            $data['errors']['confirmPasswordErr'] = $this->vld->confirmPassword($data['confirmPassword']);
 
 
             // if there is no erros
