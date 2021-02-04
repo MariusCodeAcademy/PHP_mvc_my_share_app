@@ -38,4 +38,28 @@ class Validation
         }
         return true;
     }
+
+    public function ifEmptyFieldWithReference(&$data, $field, $fieldDisplayName)
+    {
+        $fieldError = $field . 'Err';
+        // Validate Name 
+        if (empty($data[$field])) {
+            // empty field
+            $data['errors'][$fieldError] = "Please enter Your $fieldDisplayName";
+        }
+    }
+
+    // if field is empty we return message, else we return empty string
+    public function ifEmptyField($field, $fieldDisplayName, $msg = null)
+    {
+        // Validate Name 
+        if (empty($field)) {
+            // empty field
+            if ($msg) {
+                return $msg;
+            }
+            return "Please enter Your $fieldDisplayName";
+        }
+        return ''; //falsy
+    }
 }
