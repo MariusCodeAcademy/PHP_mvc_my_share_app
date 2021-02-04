@@ -113,29 +113,18 @@ class Users extends Controller
             $data = [
                 'email'     => trim($_POST['email']),
                 'password'  => trim($_POST['password']),
-                'emailErr'     => '',
-                'passwordErr'  => '',
+                'errors' => [
+                    'emailErr'     => '',
+                    'passwordErr'  => '',
+                ],
             ];
 
-            // Validate email
-            if (empty($data['email'])) {
-                $data['emailErr'] = 'Please enter your email';
-            } else {
-                // check if we have this email in our user table DB
-                if ($this->userModel->findUserByEmail($data['email'])) {
-                    // user found
-                } else {
-                    $data['emailErr'] = 'User does not exist';
-                }
-            }
+            $data['errors']['emailErr'] = $this->vld->validateLoginEmail($data['email'], $this->userModel);
 
-            // Validate password
-            if (empty($data['password'])) {
-                $data['passwordErr'] = 'Please enter your password';
-            }
+            $data['errors']['passwordErr'] = $this->vld->validateEmpty($data['password'], 'Please enter your password');
 
             // check if we have errors
-            if (empty($data['emailErr']) && empty($data['passwordErr'])) {
+            if ($this->vld->ifEmptyArr($data['errors'])) {
                 // no errors 
                 // email was found and password was entered
                 $loggedInUser = $this->userModel->login($data['email'], $data['password']);
@@ -146,7 +135,7 @@ class Users extends Controller
                     // die('email and passs match start session immediately');
                     $this->createUserSession($loggedInUser);
                 } else {
-                    $data['passwordErr'] = 'Wrong password or email';
+                    $data['errors']['passwordErr'] = 'Wrong password or email';
                     // load view with errors
                     $this->view('users/login', $data);
                 }
@@ -167,8 +156,10 @@ class Users extends Controller
             $data = [
                 'email'     => '',
                 'password'  => '',
-                'emailErr'     => '',
-                'passwordErr'  => '',
+                'errors' => [
+                    'emailErr'     => '',
+                    'passwordErr'  => '',
+                ]
             ];
             $data['currentPage'] = 'login';
             // load view
