@@ -4,6 +4,8 @@
 
 class Validation
 {
+    private $password;
+    // private $errors = []
     // checks if server request is post
     // @return boolean
     public function ifRequestIsPost()
@@ -50,14 +52,13 @@ class Validation
     }
 
     // if field is empty we return message, else we return empty string
-    public function ifEmptyField($field, $fieldDisplayName)
+    public function validateName($field)
     {
         // Validate Name 
-        if (empty($field)) {
-            // empty field
+        if (empty($field)) return "Please enter your Name";
 
-            return "Please enter Your $fieldDisplayName";
-        }
+        if (!preg_match("/^[a-z ,.'-]+$/i", $field)) return "Name must only contain Name characters";
+
         return ''; //falsy
     }
 
@@ -80,6 +81,9 @@ class Validation
         // validate empty 
         if (empty($passField)) return "Please enter a password";
 
+        // save password for later
+        $this->password = $passField;
+
         // if pass length is les then min
         if (strlen($passField) < $min) return "Password must be more than $min characters length";
 
@@ -94,6 +98,18 @@ class Validation
         if (!preg_match("#[A-Z]+#", $passField)) return "Password must include at least one Capital letter!";
 
         // if (!preg_match("#\W+#", $passField)) return "Password must include at least one symbol!";
+
+        return '';
+    }
+
+    public function confirmPassword($repeatField)
+    {
+        // validate empty 
+        if (empty($repeatField)) return "Please repeat a password";
+
+        if (!$this->password) return 'no password saved';
+
+        if ($repeatField !== $this->password) return "Password must match";
 
         return '';
     }
