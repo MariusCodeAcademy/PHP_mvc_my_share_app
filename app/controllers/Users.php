@@ -7,7 +7,7 @@
 */
 class Users extends Controller
 {
-    private $userModel;
+    private $userModel; // x9829
     private $vld;
 
     public function __construct()
@@ -15,6 +15,11 @@ class Users extends Controller
         $this->userModel = $this->model('User');
         // ini validation class
         $this->vld = new Validation;
+    }
+
+    public function index()
+    {
+        redirect('/posts');
     }
 
     public function register()
@@ -37,53 +42,37 @@ class Users extends Controller
 
             ];
 
-            // Validate Name 
-            // if (empty($data['name'])) {
-            //     // empty field
-            //     $data['errors']['nameErr'] = "Please enter Your Name";
-            // }
-
-            // $var1 = 'bob';
-            // $var2 = &$var1;
-            // $var2 = 'james';
-            // echo "var1 $var1 <br>";
-            // echo "var2 $var2 <br>";
-            // die();
-
-            // by reference 
-            // by value 
-
-            // in this case this function mutates $data Array
-            // $this->vld->ifEmptyFieldWithReference($data, 'name', 'Name');
 
             // not modifying
             $data['errors']['nameErr'] = $this->vld->ifEmptyField($data['name'], 'Name');
 
 
-            $data['errors']['emailErr'] = $this->vld->ifEmptyField($data['email'], 'Email');
+            $data['errors']['emailErr'] = $this->vld->validateEmail($data['email'], $this->userModel);
 
-            // Validate Email 
-            if ($data['errors']['emailErr'] === '') {
 
-                if (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
-                    $data['errors']['emailErr'] = "Please check your email";
-                } else {
-                    // check if email already exists
-                    if ($this->userModel->findUserByEmail($data['email'])) {
-                        $data['errors']['emailErr'] = "Email already taken";
-                    }
-                }
-            }
 
-            $data['errors']['passwordErr'] = $this->vld->ifEmptyField($data['password'], 'Password');
 
-            // Validate Password 
-            if ($data['errors']['passwordErr'] === '') {
 
-                if (strlen($data['password']) < 6) {
-                    $data['errors']['passwordErr'] = "Password must be 6 or more characters";
-                }
-            }
+
+
+
+
+
+            $data['errors']['passwordErr'] = $this->vld->validatePassword($data['password'], 6, 10);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // make it so it will return custom msg
             $data['errors']['confirmPasswordErr'] = $this->vld->ifEmptyField($data['confirmPassword'], 'Password', 'Please repeat password');
