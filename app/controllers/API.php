@@ -15,11 +15,19 @@ class API extends Controller
         echo 'index in api';
     }
 
-    public function comments()
+    public function comments($post_id = null)
     {
+        if ($post_id === null) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'no id given']);
+            die();
+        }
+        $comments = $this->commentModel->getMeComments($post_id);
         $data = [
-            'id' => 'comments'
+            'comments' => $comments,
+            'post_id' => $post_id
         ];
+        header('Content-Type: application/json');
         echo json_encode($data);
     }
 }
