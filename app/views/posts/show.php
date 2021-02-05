@@ -26,16 +26,46 @@
         <div class="col">
             <h2>Comments</h2>
             <div id="comments" class="comment-container">
-                <div class="card">
-                    <div class="card-header">Author <span>When</span></div>
-                    <div class="card-body">
-                        comment text
-                    </div>
-                </div>
+                <h2 class="display-3">Loading</h2>
             </div>
-
         </div>
     </div>
+
+    <script>
+        const commentsOutputEl = document.getElementById('comments');
+        fetchComments();
+
+        function fetchComments() {
+            fetch('<?php echo URLROOT . '/api/comments/' . $data['post']->id ?>')
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    generateHTMLComments(data.comments);
+                });
+        }
+
+
+
+        function generateHTMLComments(commentArr) {
+            commentsOutputEl.innerHTML = '';
+            commentArr.forEach(function(commentObj) {
+                commentsOutputEl.innerHTML += generateComment(commentObj);
+            });
+        }
+
+        function generateComment(oneComment) {
+            return `
+                <div class="card" id='${oneComment.comment_id}' >
+                    <div class="card-header">
+                    ${oneComment.author} 
+                    <span>${oneComment.created_at}</span></div>
+                    <div class="card-body">
+                        ${oneComment.comment_body}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 
 <?php endif; ?>
 
