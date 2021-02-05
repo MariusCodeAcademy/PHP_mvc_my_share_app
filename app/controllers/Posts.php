@@ -99,6 +99,7 @@ class Posts extends Controller
         $data = [
             'post' => $post,
             'user' => $user,
+            'commentsOn' => true,
         ];
         // load view with data
         $this->view('posts/show', $data);
