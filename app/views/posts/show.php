@@ -23,7 +23,19 @@
 
     <hr class="mt-5 mb-4">
     <div class="row mb-5">
-        <div class="col">
+        <div class="col-12">
+            <h2>Add Comment</h2>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <textarea name="commentBody" class="form-control" placeholder="Add comment"></textarea>
+                </div>
+                <button type="submit" class='btn btn-success'>Comment</button>
+            </form>
+        </div>
+        <div class="col-12">
             <h2>Comments</h2>
             <div id="comments" class="comment-container">
                 <h2 class="display-3">Loading</h2>
