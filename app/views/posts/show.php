@@ -27,10 +27,10 @@
             <h2>Add Comment</h2>
             <form id="add-comment-form" action="" method="post">
                 <div class="form-group">
-                    <input required type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
+                    <input  type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
                 </div>
                 <div class="form-group">
-                    <textarea required name="commentBody" class="form-control" placeholder="Add comment"></textarea>
+                    <textarea id="comment-body"  name="commentBody" class="form-control" placeholder="Add comment"></textarea>
                 </div>
                 <button type="submit" class='btn btn-success'>Comment</button>
             </form>
@@ -46,6 +46,7 @@
     <script>
         const commentsOutputEl = document.getElementById('comments');
         const addCommentFormEl = document.getElementById('add-comment-form');
+        const commentBodyEl = document.getElementById('comment-body');
 
         addCommentFormEl.addEventListener('submit', addCommentAsync);
 
@@ -82,10 +83,9 @@
             `;
         }
 
-
         function addCommentAsync(event) {
             event.preventDefault();
-            console.log('add comment');
+            // console.log('add comment');
             // add data and post it to api 
             const addCommentFormData = new FormData(addCommentFormEl);
 
@@ -94,11 +94,22 @@
                     method: 'post',
                     body: addCommentFormData
                 })
-                .then(resp => resp.text())
+                .then(resp => resp.json())
                 .then(data => {
                     console.log(data);
+                    if (data.success){
+                        handleSuccessComment();
+                    }
                 })
                 .catch(error => console.error(error));
+        }
+
+        function handleSuccessComment(){
+            // clear comment fields
+            commentBodyEl.value = '';
+
+            // add new comment
+            fetchComments();
         }
     </script>
 
