@@ -21,4 +21,26 @@ class Comment
         }
         return false;
     }
+
+    // @return Boolean
+    
+    public function addComment($data)
+    {
+        // get data and add comment using data
+        $this->db->query("INSERT INTO comments (post_id, author, comment_body) VALUES (:post_id, :author, :comment_body)");
+
+        // bind the values
+        $this->db->bind(':post_id', $data['postId']);
+        $this->db->bind(':author', $data['author']);
+        $this->db->bind(':comment_body', $data['commentBody']);
+
+        // make query 
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
 }
