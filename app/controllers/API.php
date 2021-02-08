@@ -30,4 +30,21 @@ class API extends Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
+
+    public function addComment($post_id = null)
+    {
+        $result = [];
+        print_r($_POST);
+        echo 'addComment ' . $post_id;
+
+        // validate POST values
+
+        // $commentData = $_POST;
+        // // if valid add post
+        // if ($this->commentModel->addComment($commentData)) return 'success';
+        $result['success'] = "Post added";
+
+        echo json_encode($result);
+        die();
+    }
 }
