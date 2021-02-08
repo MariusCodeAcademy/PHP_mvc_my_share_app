@@ -25,18 +25,18 @@
     <div class="row mb-5">
         <div class="col-12">
             <h2>Add Comment</h2>
-            <form action="" method="post">
+            <form id="add-comment-form" action="" method="post">
                 <div class="form-group">
-                    <input type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
+                    <input required type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
                 </div>
                 <div class="form-group">
-                    <textarea name="commentBody" class="form-control" placeholder="Add comment"></textarea>
+                    <textarea required name="commentBody" class="form-control" placeholder="Add comment"></textarea>
                 </div>
                 <button type="submit" class='btn btn-success'>Comment</button>
             </form>
         </div>
         <div class="col-12">
-            <h2>Comments</h2>
+            <h2 class='my-3'>Comments</h2>
             <div id="comments" class="comment-container">
                 <h2 class="display-3">Loading</h2>
             </div>
@@ -45,6 +45,12 @@
 
     <script>
         const commentsOutputEl = document.getElementById('comments');
+        const addCommentFormEl = document.getElementById('add-comment-form');
+
+        addCommentFormEl.addEventListener('submit', addCommentAsync);
+
+
+
         fetchComments();
 
         function fetchComments() {
@@ -55,8 +61,6 @@
                     generateHTMLComments(data.comments);
                 });
         }
-
-
 
         function generateHTMLComments(commentArr) {
             commentsOutputEl.innerHTML = '';
@@ -76,6 +80,25 @@
                     </div>
                 </div>
             `;
+        }
+
+
+        function addCommentAsync(event) {
+            event.preventDefault();
+            console.log('add comment');
+            // add data and post it to api 
+            const addCommentFormData = new FormData(addCommentFormEl);
+
+            // send data to api 
+            fetch('<?php echo URLROOT . '/api/addComment/' . $data['post']->id ?>', {
+                    method: 'post',
+                    body: addCommentFormData
+                })
+                .then(resp => resp.text())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error(error));
         }
     </script>
 
