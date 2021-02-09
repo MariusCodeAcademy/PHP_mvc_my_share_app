@@ -28,12 +28,12 @@
             <form id="add-comment-form" action="" method="post">
                 <div class="form-group">
                     <input id="username"  type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
-                    <span class='invalid-feedback'>Please add text</span>
+                    <span class='invalid-feedback'></span>
 
                 </div>
                 <div class="form-group">
                     <textarea id="comment-body"  name="commentBody" class="form-control " placeholder="Add comment"></textarea>
-                    <span class='invalid-feedback'>Please add text</span>
+                    <span class='invalid-feedback'></span>
                 </div>
                 <button type="submit" class='btn btn-success'>Comment</button>
             </form>
@@ -89,6 +89,7 @@
 
         function addCommentAsync(event) {
             event.preventDefault();
+            resetErrors();
             // console.log('add comment');
             // add data and post it to api 
             const addCommentFormData = new FormData(addCommentFormEl);
@@ -132,9 +133,16 @@
             if(errorObj.usernameErr) {
                 usernameInputEl.classList.add('is-invalid');
                 usernameInputEl.nextElementSibling.innerHTML = errorObj.usernameErr;
-
             }
 
+        }
+
+        function resetErrors() {
+            // search form for al is-inavlid clases and remove them
+            const errorEl = addCommentFormEl.querySelectorAll('.is-invalid');
+            // console.log("errorEl")
+            // console.log(errorEl)
+            errorEl.forEach((errorInputEl) => errorInputEl.classList.remove('is-invalid'));
         }
     </script>
 
