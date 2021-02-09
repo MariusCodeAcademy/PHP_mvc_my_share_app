@@ -10,7 +10,7 @@ class Comment
 
     public function getMeComments($post_id)
     {
-        $this->db->query('SELECT * FROM comments WHERE post_id = :id');
+        $this->db->query('SELECT * FROM comments WHERE post_id = :id ORDER BY created_at DESC');
 
         $this->db->bind(':id', $post_id);
 
