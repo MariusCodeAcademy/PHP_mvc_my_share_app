@@ -35,7 +35,7 @@
                     <textarea id="comment-body"  name="commentBody" class="form-control " placeholder="Add comment"></textarea>
                     <span class='invalid-feedback'></span>
                 </div>
-                <button type="submit" class='btn btn-success'>Comment</button>
+                <button id='submit-btn' type="submit" class='btn btn-success'>Comment</button>
             </form>
         </div>
         <div class="col-12">
@@ -51,12 +51,25 @@
         const addCommentFormEl = document.getElementById('add-comment-form');
         const commentBodyEl = document.getElementById('comment-body');
         const usernameInputEl = document.getElementById('username');
+        const submitBtnEl = document.getElementById('submit-btn');
 
         addCommentFormEl.addEventListener('submit', addCommentAsync);
 
-
+        commentBodyEl.addEventListener('input', clearErrorsOnInput);
+        usernameInputEl.addEventListener('input', clearErrorsOnInput);
 
         fetchComments();
+
+        function clearErrorsOnInput(event) {
+            // console.log('clearErrorsOnInput');
+            // if input length is  2 and more characters we remove error class
+            const stringLength = event.target.value.length;
+            // console.log(stringLength)
+            if (stringLength > 1) {
+                event.target.classList.remove('is-invalid');
+                submitBtnEl.removeAttribute('disabled');
+            }
+        }
 
         function fetchComments() {
             fetch('<?php echo URLROOT . '/api/comments/' . $data['post']->id ?>')
@@ -122,6 +135,8 @@
         function handleCommentError(errorObj) {
             console.log('handleCommentError');
             console.log(errorObj);
+
+            submitBtnEl.setAttribute('disabled', '');
 
             if(errorObj.commentBodyErr) {
                 // add error class
