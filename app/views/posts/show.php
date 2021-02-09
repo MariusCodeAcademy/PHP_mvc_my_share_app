@@ -27,10 +27,13 @@
             <h2>Add Comment</h2>
             <form id="add-comment-form" action="" method="post">
                 <div class="form-group">
-                    <input  type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
+                    <input id="username"  type="text" name="username" class="form-control" value="<?php echo $_SESSION['user_name'] ?>" placeholder="Your Name">
+                    <span class='invalid-feedback'>Please add text</span>
+
                 </div>
                 <div class="form-group">
-                    <textarea id="comment-body"  name="commentBody" class="form-control" placeholder="Add comment"></textarea>
+                    <textarea id="comment-body"  name="commentBody" class="form-control " placeholder="Add comment"></textarea>
+                    <span class='invalid-feedback'>Please add text</span>
                 </div>
                 <button type="submit" class='btn btn-success'>Comment</button>
             </form>
@@ -47,6 +50,7 @@
         const commentsOutputEl = document.getElementById('comments');
         const addCommentFormEl = document.getElementById('add-comment-form');
         const commentBodyEl = document.getElementById('comment-body');
+        const usernameInputEl = document.getElementById('username');
 
         addCommentFormEl.addEventListener('submit', addCommentAsync);
 
@@ -96,9 +100,11 @@
                 })
                 .then(resp => resp.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.success){
                         handleSuccessComment();
+                    } else {
+                        handleCommentError(data.errors)
                     }
                 })
                 .catch(error => console.error(error));
@@ -110,6 +116,25 @@
 
             // add new comment
             fetchComments();
+        }
+
+        function handleCommentError(errorObj) {
+            console.log('handleCommentError');
+            console.log(errorObj);
+
+            if(errorObj.commentBodyErr) {
+                // add error class
+                commentBodyEl.classList.add('is-invalid');
+                //add error text
+                commentBodyEl.nextElementSibling.innerHTML = errorObj.commentBodyErr;
+            }
+
+            if(errorObj.usernameErr) {
+                usernameInputEl.classList.add('is-invalid');
+                usernameInputEl.nextElementSibling.innerHTML = errorObj.usernameErr;
+
+            }
+
         }
     </script>
 
