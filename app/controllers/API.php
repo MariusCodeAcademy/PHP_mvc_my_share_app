@@ -103,11 +103,27 @@ class API extends Controller
     {
         $vld = new Validation;
 
-        
+        if (!$vld->ifRequestIsPost()) redirect('/posts');
 
-        print_r($_POST);
-        echo $inputField . '<br>';
-        $input = $_POST[$inputField];
-        die('hello from validate');
+        $input = filter_var($_POST[$inputField], FILTER_SANITIZE_STRING);
+        
+        $input = trim($input);
+
+        $result = $vld->validateName($input);
+
+        // if result is empty then success
+        if (empty($result)) {
+            $response['success'] = $input;
+        } else {
+            $response['error'] = $result;
+        }
+
+        // else we have error
+
+        // print_r($_POST);
+        // echo $inputField . '<br>';
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        die();
     }
 }

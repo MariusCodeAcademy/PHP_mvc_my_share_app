@@ -58,12 +58,24 @@ class Validation
         }
     }
 
+    /**
+     * check if given sting is empty returns message if empty.
+     *
+     * @param string $field
+     * @param string $msg
+     * @return string
+     */
     public function validateEmpty($field, $msg)
     {
         return empty($field) ? $msg : '';
     }
 
-    // if field is empty we return message, else we return empty string
+    /**
+     * if field is empty we return message, else we return empty string.
+     *
+     * @param string $field
+     * @return string
+     */
     public function validateName($field)
     {
         // Validate Name 

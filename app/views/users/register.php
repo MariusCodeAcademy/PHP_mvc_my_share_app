@@ -70,8 +70,11 @@ function sendAjaxPost(url, myFormData){
     fetch(url, {
         method: 'post',
         body: myFormData
-    }).then(resp => resp.text()).then(data => {
+    }).then(resp => resp.json()).then(data => {
         console.log(data);
+        if (data.error) {
+            nameInputEl.classList.add('is-invalid');
+        }
     }).catch(err => console.error(err));
 }
 
