@@ -103,7 +103,7 @@
         function addCommentAsync(event) {
             event.preventDefault();
             resetErrors();
-            // console.log('add comment');
+            
             // add data and post it to api 
             const addCommentFormData = new FormData(addCommentFormEl);
 
