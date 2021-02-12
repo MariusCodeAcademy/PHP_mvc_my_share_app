@@ -57,12 +57,22 @@ function handleInput(e){
     
     console.log(e.target.value)
     const inputValue = e.target.value;
+    const inputName = e.target.name;
+    const inputData = new FormData();
+    inputData.append(inputName, inputValue);
     // get value and send it for validation
-    // sendAjaxPost('api/valie', data)
+    sendAjaxPost('<?php echo URLROOT ?>/api/validate', inputData)
+    // console.log('<?php echo URLROOT ?>/api/validate');
+    
 }
 // send http post request to api 
-function sendAjaxPost(url, data){
-
+function sendAjaxPost(url, myFormData){
+    fetch(url, {
+        method: 'post',
+        body: myFormData
+    }).then(resp => resp.text()).then(data => {
+        console.log(data);
+    }).catch(err => console.error(err));
 }
 
 </script>

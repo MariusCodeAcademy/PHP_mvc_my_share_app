@@ -99,5 +99,9 @@ class API extends Controller
         die();
     }
 
-    
+    public function validate()
+    {
+        print_r($_POST);
+        die('hello from validate');
+    }
 }
