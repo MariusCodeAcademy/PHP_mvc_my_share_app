@@ -99,9 +99,15 @@ class API extends Controller
         die();
     }
 
-    public function validate()
+    public function validate($inputField)
     {
+        $vld = new Validation;
+
+        
+
         print_r($_POST);
+        echo $inputField . '<br>';
+        $input = $_POST[$inputField];
         die('hello from validate');
     }
 }
