@@ -40,7 +40,14 @@ class Validation
         }
         return true;
     }
-
+    /**
+     * validates empty field 1212121
+     *
+     * @param array $data
+     * @param string $field
+     * @param string  $fieldDisplayName
+     * @return void
+     */
     public function ifEmptyFieldWithReference(&$data, $field, $fieldDisplayName)
     {
         $fieldError = $field . 'Err';
